@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+python-multipart
+python-dotenv
+langchain-core
+langchain-openai
+langchain-chroma
+langchain-text-splitters
+pdfplumber
+PyMuPDF
+pytesseract
+Pillow
