@@ -1,4 +1,5 @@
 import os
+import chromadb
 import shutil
 import tempfile
 from io import BytesIO
@@ -67,14 +68,24 @@ CHROMA_DIR = BASE_DIR / "chroma_db"
 CHROMA_DIR.mkdir(parents=True, exist_ok=True)
 
 
+
 def load_vectorstore() -> Chroma:
-    """Open the same persistent Chroma database used by the original app."""
+    """Connect to the Chroma Cloud database."""
+
     embeddings = OpenAIEmbeddings(
         model="text-embedding-3-small",
         api_key=OPENAI_API_KEY or None,
     )
+
+    client = chromadb.CloudClient(
+        tenant=os.environ["CHROMA_TENANT"],
+        database=os.environ["CHROMA_DATABASE"],
+        api_key=os.environ["CHROMA_API_KEY"],
+    )
+
     return Chroma(
-        persist_directory=str(CHROMA_DIR),
+        client=client,
+        collection_name="pdf_documents",
         embedding_function=embeddings,
     )
 

@@ -10,3 +10,4 @@ pdfplumber
 PyMuPDF
 pytesseract
 Pillow
+chromadb
